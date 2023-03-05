@@ -8,7 +8,7 @@ import Login from './contents/Login';
 import Register from './contents/Register';
 import Dashboard from './contents/Dashboard';
 import Profile from './contents/Profile';
-
+import Hardware from './contents/Hardware';
 
 function App() {
   
@@ -35,6 +35,9 @@ function App() {
       </Route>
       <Route path="/profile" element={<Profile />}>
         <Route index element={<Profile />} />
+      </Route>
+      <Route path="/hardware" element={<Hardware />}>
+        <Route index element={<Hardware />} />
       </Route>
     </Routes> 
       </div>

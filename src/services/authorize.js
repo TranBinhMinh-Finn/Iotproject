@@ -1,16 +1,22 @@
+import axios from "axios";
+
 export const authenticate=(response,next)=>{
     if(window !=="false"){
-        localStorage.setItem("token",JSON.stringify(response.data.accessToken))
-        localStorage.setItem("user",JSON.stringify(response.data.user))
+        localStorage.setItem("token",JSON.stringify(response.data.access))
+        localStorage.setItem("refresh",JSON.stringify(response.data.refresh))
     }
+    axios.get('http://localhost:8000/users/me', { headers: authHeader() }).then(response =>{
+        localStorage.setItem("user",JSON.stringify(response.data))
+        console.log(getUser().devices)
+    })
     next()
 }
 
 
 export const getToken=()=>{
     if(window !=="undefined"){
-        if(localStorage.getItem("accessToken")){
-            return JSON.parse(localStorage.getItem("accessToken"))
+        if(localStorage.getItem("token")){
+            return JSON.parse(localStorage.getItem("token"))
         }else{
             return false
         }
@@ -26,6 +32,15 @@ export const getUser=()=>{
         }
     }
 }
+
+export function authHeader() {
+    const token = JSON.parse(localStorage.getItem('token'));
+    if (token) {
+      return { Authorization: 'Bearer ' + token};
+    } else {
+      return {};
+    }
+  }
 
 
 // import { useState, useEffect } from 'react';

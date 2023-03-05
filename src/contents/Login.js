@@ -2,7 +2,7 @@ import '../App.css'
 import {useState} from "react"
 import { Link } from 'react-router-dom'
 import axios from "axios"
-import { authenticate } from '../services/authorize'
+import { authenticate, fetchUser } from '../services/authorize'
 import { useNavigate } from 'react-router-dom';
 
 
@@ -40,17 +40,17 @@ const  Login = ()=>{
     }
     
     
-      axios.post('https://www.melivecode.com/api/login', {
+      axios.post('http://localhost:8000/api-auth', {
         username: userName,
         password: password })
         .then (response =>{
           // Lưu trữ token nhận được vào localStorage hoặc cookie
-          authenticate(response,() => navigate('/dashboard'))
-          localStorage.setItem('token', response.data.accessToken);
-          localStorage.setItem('user', response.data.user);
-        console.log(response.data.status)
-        console.log(response.data.message)
-        console.log(response.data.user)
+          localStorage.setItem('token', response.data.access);
+          localStorage.setItem('refresh', response.data.refresh);
+          authenticate(response,() => navigate('/dashboard'));
+        //console.log(response.data.status)
+        //console.log(response.data.access)
+        //console.log(response.data.refresh)
         // Điều hướng đến trang được bảo vệ
         })
         .catch((error) =>{

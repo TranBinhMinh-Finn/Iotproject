@@ -10,7 +10,7 @@ class Navbar extends Component {
     }
     render() {
         return (
-            <nav>
+            <nav width="20vw">
                 <ul>
                     <Navitems item="Home" tolink="/"></Navitems>
                     <Navitems item="About" tolink="/about"></Navitems>

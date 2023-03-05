@@ -21,7 +21,7 @@ const Registerscreen = ()=>{
   const [rePasswordColor,setRePasswordColor] = useState ('')
 
   const handleSubmit = (event) => {   
-
+    event.preventDefault();
     if(userName.length>8){
       setErrorUserName('')
       setUserNameColor('green')

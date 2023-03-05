@@ -11,7 +11,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { IconButton } from "@material-ui/core";
-import { Delete, Visibility } from "@mui/icons-material";
+import { Visibility } from "@mui/icons-material";
 const useStyles = makeStyles({
     table: {
       minWidth: 650,
@@ -29,7 +29,7 @@ const Hardware = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [devices, setDevices] = useState();
     const viewDevice = (device_id) => {
-        navigate(`/devices/${device_id}`)
+        navigate(`/device/${device_id}`)
     }
 
     const viewIcon = (device_id) => {
@@ -44,7 +44,6 @@ const Hardware = () => {
             const devices_list = getUser().devices;
             console.log(devices_list); 
             setDevices(await Promise.all(devices_list.map(device => getDevice(device))));
-            console.log(devices);
             setIsLoading(false);
         };
         fetchData();

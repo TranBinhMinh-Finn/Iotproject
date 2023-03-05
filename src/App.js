@@ -9,6 +9,7 @@ import Register from './contents/Register';
 import Dashboard from './contents/Dashboard';
 import Profile from './contents/Profile';
 import Hardware from './contents/Hardware';
+import DeviceView from './contents/DeviceView';
 
 function App() {
   
@@ -38,6 +39,9 @@ function App() {
       </Route>
       <Route path="/hardware" element={<Hardware />}>
         <Route index element={<Hardware />} />
+      </Route>
+      <Route path="/device/:id">
+        <Route index element={<DeviceView />} />
       </Route>
     </Routes> 
       </div>

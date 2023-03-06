@@ -11,7 +11,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { IconButton } from "@material-ui/core";
-import { Edit, Visibility } from "@mui/icons-material";
+import { Edit, Visibility, Delete } from "@mui/icons-material";
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
@@ -50,6 +50,21 @@ const Hardware = () => {
         );
     }
 
+    const deleteDevice = async (device_id) => {
+        axios.delete(`http://localhost:8000/devices/${device_id}`, { headers: authHeader()}).then(
+            response => {
+                alert('deleted device')
+                window.location.reload(false);
+            }
+        )
+    }
+
+    const deleteIcon = (device_id) => {
+        return (<IconButton onClick= {(e) => deleteDevice(device_id)}>
+        <Delete color="secondary" />
+        </IconButton>
+        );
+    }
     const getDevices = async () => {
         const user = await fetchUser();
         return await Promise.all(user.devices.map(device => getDevice(device)))
@@ -71,7 +86,6 @@ const Hardware = () => {
                 <Button variant="contained" color="primary" onClick={() => navigate('/device/create')}>Add New Device</Button>
                 </CardContent>
                 <CardContent>
-                    
                     <TableContainer component={Paper}>
                     <Table className={classes.table} aria-label="simple table">
                         <TableHead>
@@ -93,6 +107,7 @@ const Hardware = () => {
                             <TableCell align="right">{device.watering_mode}</TableCell>
                             <TableCell align="right">{viewIcon(device.device_id)}</TableCell>
                             <TableCell align="right">{editIcon(device.device_id)}</TableCell>
+                            <TableCell align="right">{deleteIcon(device.device_id)}</TableCell>
                             </TableRow>
                         ))}
                         </TableBody>
@@ -102,11 +117,8 @@ const Hardware = () => {
             </Card>
             )
         }
-        
         </div>
     );
-// details of devices (reders kup khr moun t dai hub ma jark api )
-// <li key={device.device_id}>{device.name}</li>
 };
 
 export default Hardware

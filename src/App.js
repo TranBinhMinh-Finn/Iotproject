@@ -12,6 +12,7 @@ import Hardware from './contents/Hardware';
 import DeviceView from './contents/DeviceView';
 import DeviceEdit from './contents/DeviceEdit';
 import DeviceCreate from './contents/DeviceCreate';
+import Logout from './services/logout';
 
 function App() {
   
@@ -29,6 +30,9 @@ function App() {
       </Route>
       <Route path="/login" element={<Login />}>
         <Route index element={<Login />} />
+      </Route>
+      <Route path="/logout" element={<Logout />}>
+        <Route index element={<Logout />} />
       </Route>
       <Route path="/register" element={<Register />}>
         <Route index element={<Register />} />

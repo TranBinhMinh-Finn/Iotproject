@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import axios from "axios"
 import { authenticate } from '../services/authorize'
 import { useNavigate } from 'react-router-dom';
-
+import AuthContext from '../services/auth-context'
 
 const  Login = ()=>{
   const navigate = useNavigate();
@@ -21,24 +21,24 @@ const  Login = ()=>{
   const [passwordColor,setPasswordColor] = useState ('')
 
   // const handleSubmit = (e) => {
-    const handleSubmit = (e) => {
+    const handleSubmit = (e, updateState) => {
       e.preventDefault();
-    // 
-    if(userName.length>8){
-      setErrorUserName('')
-      setUserNameColor('green')
-    }else{
-      setErrorUserName('Tên đăng nhập không tồn tại')
-      setUserNameColor('red')
-    }
-    if(password.length>8){
-      setErrorPassword('')
-      setPasswordColor('green')
-    }else{
-      setErrorPassword('Mật khẩu Không đúng')
-      setPasswordColor('red')
-    }
-    
+    //// 
+    //if(userName.length>8){
+    //  setErrorUserName('')
+    //  setUserNameColor('green')
+    //}else{
+    //  setErrorUserName('Tên đăng nhập không tồn tại')
+    //  setUserNameColor('red')
+    //}
+    //if(password.length>8){
+    //  setErrorPassword('')
+    //  setPasswordColor('green')
+    //}else{
+    //  setErrorPassword('Mật khẩu Không đúng')
+    //  setPasswordColor('red')
+    //}
+    //
     
       axios.post('http://localhost:8000/api-auth', {
         username: userName,
@@ -47,7 +47,8 @@ const  Login = ()=>{
           // Lưu trữ token nhận được vào localStorage hoặc cookie
           localStorage.setItem('token', response.data.access);
           localStorage.setItem('refresh', response.data.refresh);
-          authenticate(response,() => navigate('/dashboard'));
+          updateState(true)
+          authenticate(response,() => navigate('/hardware'));
         //console.log(response.data.status)
         //console.log(response.data.access)
         //console.log(response.data.refresh)
@@ -55,6 +56,10 @@ const  Login = ()=>{
         })
         .catch((error) =>{
           console.error(error)
+          setErrorUserName('Tên đăng nhập không tồn tại')
+          setUserNameColor('red')
+          setErrorPassword('Mật khẩu Không đúng')
+          setPasswordColor('red')
         });
   };
 
@@ -94,7 +99,14 @@ const  Login = ()=>{
           <Link to="/Register">Tạo tài khoản?</Link>
 
           </div>
-          <button type="button" onClick={(handleSubmit) } >Đăng Nhập</button>
+          <AuthContext.Consumer>
+
+            {({ loggedIn, setLoggedIn }) => (
+          <button type="button" onClick={(e) => {
+            handleSubmit(e, setLoggedIn)
+            }} >Đăng Nhập</button>
+          )}
+          </AuthContext.Consumer>
           
       </form>
     </div>

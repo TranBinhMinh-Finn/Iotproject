@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Navitems from './Navitems'
-
+import AuthContext from '../services/auth-context';
+import { getUser } from '../services/authorize';
 class Navbar extends Component {
     constructor(props) {
         super(props);
@@ -10,24 +11,20 @@ class Navbar extends Component {
     }
     render() {
         return (
+            <AuthContext.Consumer>
+
+            {({ loggedIn, setLoggedIn }) => (
             <nav width="20vw">
                 <ul>
                     <Navitems item="Home" tolink="/"></Navitems>
                     <Navitems item="About" tolink="/about"></Navitems>
-                    <Navitems item="Hardware" tolink="/hardware"></Navitems>
-                    <Navitems item="Dashboard" tolink="/dashboard"></Navitems>
-                    <Navitems item="Profile" tolink="/profile"></Navitems>
-                    {/* if Localstorage have UserInfo  
-                    <Navitems item="Logout" tolink="/Logout"></Navitems>
-                    else
-                    */}
-                    <Navitems item="Login" tolink="/login"></Navitems>
-                </ul>
-                
-                     
-                    
-            
+                    <Navitems item="Devices" tolink="/hardware"></Navitems>
+                    {(loggedIn || getUser()) ? (<Navitems item="Logout" tolink="/logout"></Navitems>) 
+                    : (<Navitems item="Login" tolink="/login"></Navitems>)}
+                </ul>     
             </nav>
+            )}
+            </AuthContext.Consumer>
         )
     }
 

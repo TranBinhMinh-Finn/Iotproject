@@ -12,7 +12,6 @@ export const authenticate=(response,next)=>{
     next()
 }
 
-
 export const getToken=()=>{
     if(window !=="undefined"){
         if(localStorage.getItem("token")){
@@ -33,6 +32,9 @@ export const getUser=()=>{
     }
 }
 
+export const fetchUser = async () => {
+    return axios.get('http://localhost:8000/users/me', { headers: authHeader() }).then(response => response.data)
+}
 export function authHeader() {
     const token = JSON.parse(localStorage.getItem('token'));
     if (token) {

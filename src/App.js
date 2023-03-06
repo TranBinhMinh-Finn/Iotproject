@@ -11,6 +11,7 @@ import Profile from './contents/Profile';
 import Hardware from './contents/Hardware';
 import DeviceView from './contents/DeviceView';
 import DeviceEdit from './contents/DeviceEdit';
+import DeviceCreate from './contents/DeviceCreate';
 
 function App() {
   
@@ -41,12 +42,16 @@ function App() {
       <Route path="/hardware" element={<Hardware />}>
         <Route index element={<Hardware />} />
       </Route>
+      <Route path="/device/create">
+        <Route index element={<DeviceCreate />} />
+      </Route>
       <Route path="/device/:id/view">
         <Route index element={<DeviceView />} />
       </Route>
       <Route path="/device/:id/edit">
         <Route index element={<DeviceEdit />} />
       </Route>
+      
     </Routes> 
       </div>
   </BrowserRouter>

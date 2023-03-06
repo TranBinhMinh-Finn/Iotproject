@@ -14,6 +14,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import { useNavigate } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DeviceEdit = () => {
+    const navigate = useNavigate();
     const classes = useStyles();
     const { id } = useParams();
     const [device, setDevice] = useState();
@@ -45,7 +47,7 @@ const DeviceEdit = () => {
             setIsLoading(false)
         };
         fetchData();
-    }, [])
+    }, [id])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -55,7 +57,10 @@ const DeviceEdit = () => {
             watering_mode: deviceMode,
             time_interval: deviceTimer,
         }, { headers: authHeader()})
-        .then(alert('update successful!'))
+        .then(response => {
+            alert('update successful!')
+            navigate('/hardware')
+        })
         .catch((error) =>{
             alert("An error occurred. Please try again later.")
           });

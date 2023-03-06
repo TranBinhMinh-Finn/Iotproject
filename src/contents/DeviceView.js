@@ -48,7 +48,7 @@ const DeviceView = () => {
     const classes = useStyles();
     const { id } = useParams();
     const [device, setDevice] = useState();
-    const [lightLevel, setLightLevel] = useState();
+    const [lightLevel, setLightLevel] = useState('no data');
     const [readings, setReadings] = useState(); 
     const [isLoading, setIsLoading] = useState(true);
     const [data] = useState([[
@@ -88,7 +88,11 @@ const DeviceView = () => {
             setDevice(await axios.get(`http://localhost:8000/devices/${id}`, { headers: authHeader()}).then(response => response.data))
             setReadings(await axios.get(`http://localhost:8000/device-readings/${id}`, { headers: authHeader()})
             .then(response => {
-                setLightLevel(response.data.results[0].brightness ? "High" : "Low") 
+                if(response.data.results.length > 0)
+                {
+                    console.log(response.data.results)
+                    setLightLevel(response.data.results[0].brightness ? "High" : "Low") 
+                }
                 return response.data.results.map(reading => {
                 return ([new Date(toUTC(Date.parse(reading.timestamp))), reading.humidity, reading.temperature]);}
             )}))
@@ -129,23 +133,32 @@ const DeviceView = () => {
                             </Grid>
                             <Grid item xs={6}>
                             <Card className={classes.root}>
-                                <CardContent>
-                                    <Typography color="textSecondary">
-                                        Last recorded at {readings[0][0].toString()}
-                                    </Typography>
-                                    <Typography variant="h5">
-                                        Latest Readings
-                                    </Typography>
-                                    <Typography color="textSecondary">
-                                        <b>Light Level:</b> {lightLevel}
-                                    </Typography>
-                                    <Typography color="textSecondary">
-                                        <b>Temperature:</b> {Math.round(readings[0][1] * 100) / 100}°C
-                                    </Typography>
-                                    <Typography color="textSecondary">
-                                        <b>Soil Moisture:</b> {Math.round(readings[0][2] * 100) / 100}%
-                                    </Typography>
-                                </CardContent>
+                                { readings.length > 0 ? (
+                                    <CardContent>
+                                        <Typography color="textSecondary">
+                                            Last recorded at {readings[0][0].toString()}
+                                        </Typography>
+                                        <Typography variant="h5">
+                                            Latest Readings
+                                        </Typography>
+                                        <Typography color="textSecondary">
+                                            <b>Light Level:</b> {lightLevel}
+                                        </Typography>
+                                        <Typography color="textSecondary">
+                                            <b>Temperature:</b> {Math.round(readings[0][1] * 100) / 100}°C
+                                        </Typography>
+                                        <Typography color="textSecondary">
+                                            <b>Soil Moisture:</b> {Math.round(readings[0][2] * 100) / 100}%
+                                        </Typography>
+                                    </CardContent>
+                                    ):(
+                                        <CardContent>
+                                        <Typography color="textSecondary">
+                                            No data
+                                        </Typography>
+                                        </CardContent>
+                                    )}
+                               
                             </Card>
                             </Grid>
                             <Grid item xs={12}>
@@ -161,14 +174,17 @@ const DeviceView = () => {
                             
                         </CardContent>
                         <CardContent>
-                            <Chart
-                                chartType="Line"
-                                width="100%"
-                                height="100%"
-                                marginBottom="20px"
-                                data={[...data, ...readings]}
-                                options={options}
-                            />
+                            {
+                                readings.length > 0 ? (<Chart
+                                    chartType="Line"
+                                    width="100%"
+                                    height="100%"
+                                    marginBottom="20px"
+                                    data={[...data, ...readings]}
+                                    options={options}
+                                />) : (<Typography color="textSecondary">No readings</Typography>)
+                            }
+                            
                          </CardContent>
                          </Card>
                     </div>

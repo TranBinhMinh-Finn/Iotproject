@@ -10,6 +10,9 @@ class About extends Component {
                 <img src={profilepic1} alt="profile1" className="profilepic1" />
                 <h3>Danh sách nhóm</h3>
                 <p>Thanongsith THAVISACK 20180288</p>
+                <p>Trần Bình Minh 20180138</p>
+                <p>Phạm Nhật Minh 20194329 </p>
+                <p>Chea Na 20190152</p>
             </div>
             )
     }

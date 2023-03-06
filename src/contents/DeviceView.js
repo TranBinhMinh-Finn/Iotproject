@@ -4,19 +4,13 @@ import axios from 'axios';
 import { authHeader } from '../services/authorize';
 import Chart from 'react-google-charts';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import { makeStyles } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import { Alert } from '@mui/material';
+import { wateringMode } from '../utils';
 
-const wateringMode = {
-    'MAN': 'Manual Mode',
-    'TIM': 'Timer Mode',
-    'ADT': 'Adaptive Mode',
-}
 function toUTC(datetime) {
     const myDate = (typeof datetime === 'number')
       ? new Date(datetime)
@@ -62,7 +56,6 @@ const DeviceView = () => {
         "Moisture",
         "Temperature",
       ]])
-    const [sentCommand, setSentCommand] = useState(false);
     const options = {
         chart: {
           title: "",
@@ -105,7 +98,7 @@ const DeviceView = () => {
         };
 
         fetchData();
-    }, [])
+    }, [id])
     return(
         <div className="condiv">
             {
@@ -180,13 +173,6 @@ const DeviceView = () => {
                          </Card>
                     </div>
                     )
-            }
-            {
-                sentCommand ? (
-                    <Alert onClose={() => {setSentCommand(false)}}>This is a success alert — check it out!</Alert>
-                ) : (
-                    <div></div>
-                )
             }
         </div>
       )

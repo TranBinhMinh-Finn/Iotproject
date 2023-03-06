@@ -11,7 +11,12 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { IconButton } from "@material-ui/core";
-import { Visibility } from "@mui/icons-material";
+import { Edit, Visibility } from "@mui/icons-material";
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Button from '@material-ui/core/Button';
+
 const useStyles = makeStyles({
     table: {
       minWidth: 650,
@@ -29,16 +34,22 @@ const Hardware = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [devices, setDevices] = useState();
     const viewDevice = (device_id) => {
-        navigate(`/device/${device_id}`)
+        navigate(`/device/${device_id}/view`)
     }
 
     const viewIcon = (device_id) => {
         return (<IconButton onClick= {(e) => {viewDevice(device_id)}}>
         <Visibility color="secondary" />
         </IconButton>
-    );
+        );
     }
     
+    const editIcon = (device_id) => {
+        return (<IconButton onClick= {(e) => {navigate(`/device/${device_id}/edit`)}}>
+        <Edit color="secondary" />
+        </IconButton>
+        );
+    }
     useEffect(() => {
         const fetchData = async () => {
             const devices_list = getUser().devices;
@@ -53,33 +64,40 @@ const Hardware = () => {
         {
             isLoading ? (
             <p>Loading...</p>) : (
-            
-            <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="simple table">
-                <TableHead>
-                <TableRow>
-                    <TableCell>Device Id</TableCell>
-                    <TableCell align="right">Device Name</TableCell>
-                    <TableCell align="right">Watering Mode</TableCell>
-                    <TableCell align="right"></TableCell>
-                    <TableCell align="right"></TableCell>
-                </TableRow>
-                </TableHead>
-                <TableBody>
-                {devices.map((device) => (
-                    <TableRow key={device.device_id}>
-                    <TableCell component="th" scope="row">
-                        {device.device_id}
-                    </TableCell>
-                    <TableCell align="right">{device.name}</TableCell>
-                    <TableCell align="right">{device.watering_mode}</TableCell>
-                    <TableCell align="right">{viewIcon(device.device_id)}</TableCell>
-                    <TableCell align="right">{viewIcon(device.device_id)}</TableCell>
-                    </TableRow>
-                ))}
-                </TableBody>
-            </Table>
-            </TableContainer>
+            <Card>
+                <CardContent>
+                <Button variant="contained" color="primary" onClick={() => {}}>Add New Device</Button>
+                </CardContent>
+                <CardContent>
+                    
+                    <TableContainer component={Paper}>
+                    <Table className={classes.table} aria-label="simple table">
+                        <TableHead>
+                        <TableRow>
+                            <TableCell>Device Id</TableCell>
+                            <TableCell align="right">Device Name</TableCell>
+                            <TableCell align="right">Watering Mode</TableCell>
+                            <TableCell align="right"></TableCell>
+                            <TableCell align="right"></TableCell>
+                        </TableRow>
+                        </TableHead>
+                        <TableBody>
+                        {devices.map((device) => (
+                            <TableRow key={device.device_id}>
+                            <TableCell component="th" scope="row">
+                                {device.device_id}
+                            </TableCell>
+                            <TableCell align="right">{device.name}</TableCell>
+                            <TableCell align="right">{device.watering_mode}</TableCell>
+                            <TableCell align="right">{viewIcon(device.device_id)}</TableCell>
+                            <TableCell align="right">{editIcon(device.device_id)}</TableCell>
+                            </TableRow>
+                        ))}
+                        </TableBody>
+                    </Table>
+                    </TableContainer>
+                </CardContent>
+            </Card>
             )
         }
         

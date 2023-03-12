@@ -145,10 +145,10 @@ const DeviceView = () => {
                                             <b>Light Level:</b> {lightLevel}
                                         </Typography>
                                         <Typography color="textSecondary">
-                                            <b>Temperature:</b> {Math.round(readings[0][1] * 100) / 100}°C
+                                            <b>Temperature:</b> {Math.round(readings[0][2] * 100) / 100}°C
                                         </Typography>
                                         <Typography color="textSecondary">
-                                            <b>Soil Moisture:</b> {Math.round(readings[0][2] * 100) / 100}%
+                                            <b>Soil Moisture:</b> {Math.round(readings[0][1] * 100) / 100}%
                                         </Typography>
                                     </CardContent>
                                     ):(

@@ -22,35 +22,35 @@ const Registerscreen = ()=>{
 
   const handleSubmit = (event) => {   
     event.preventDefault();
-    if(userName.length>8){
-      setErrorUserName('')
-      setUserNameColor('green')
-    }else{
-      setErrorUserName('Vui lòng nhập tên đăng nhập nhiều hơn 8 chữ')
-      setUserNameColor('red')
-    }
-    if(email.includes("@")){
-      setErrorEmail('')
-      setEmailColor('green')
-    }else{
-      setErrorEmail('Email không đúng')
-      setEmailColor('red')
-    }
+    //if(userName.length>8){
+    //  setErrorUserName('')
+    //  setUserNameColor('green')
+    //}else{
+    //  setErrorUserName('Vui lòng nhập tên đăng nhập nhiều hơn 8 chữ')
+    //  setUserNameColor('red')
+    //}
+    //if(email.includes("@")){
+    //  setErrorEmail('')
+    //  setEmailColor('green')
+    //}else{
+    //  setErrorEmail('Email không đúng')
+    //  setEmailColor('red')
+    //}
 
-    if(password.length>8){
-      setErrorPassword('')
-      setPasswordColor('green')
-    }else{
-      setErrorPassword('Mật khẩu phải có 8 ký tự trở lên')
-      setPasswordColor('red')
-    }
-    if(repassword !== "" && repassword === password){
-      setErrorRepassword('')
-      setRePasswordColor('green')
-    }else{
-      setErrorRepassword('Mật khẩu không trùng nhau')
-      setRePasswordColor('red')
-    }
+    //if(password.length>8){
+    //  setErrorPassword('')
+    //  setPasswordColor('green')
+    //}else{
+    //  setErrorPassword('Mật khẩu phải có 8 ký tự trở lên')
+    //  setPasswordColor('red')
+    //}
+    //if(repassword !== "" && repassword === password){
+    //  setErrorRepassword('')
+    //  setRePasswordColor('green')
+    //}else{
+    //  setErrorRepassword('Mật khẩu không trùng nhau')
+    //  setRePasswordColor('red')
+    //}
     
     axios.post("http://localhost:8000/users/register", {
       username: userName,

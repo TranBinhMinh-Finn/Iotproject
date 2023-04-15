@@ -21,7 +21,7 @@ function toUTC(datetime) {
     }
   
     const getUTC = myDate.getTime();
-    const offset = myDate.getTimezoneOffset() * 60000; // It's in minutes so convert to ms
+    const offset = 0 //myDate.getTimezoneOffset() * 60000; // It's in minutes so convert to ms
     return getUTC + offset; // UTC - OFFSET
 }
 
